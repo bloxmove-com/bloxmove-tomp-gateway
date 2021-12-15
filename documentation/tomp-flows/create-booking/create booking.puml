@@ -1,0 +1,74 @@
+@startuml Create Booking Flow
+ 
+participant "User Mobility App" as UMA 
+participant "Fleet Node" as FLN
+participant "TOMP-Gateway" as TOG
+participant "TO Car Service" as TOC
+
+
+
+== Request Booking == 
+
+
+UMA -> FLN: request rent (vehicleDID, consumerDID, packageId, verifiablePresentation)
+note right
+vehicleDID = tomp-assetID
+end note
+
+FLN -> TOG: create-booking(assetID)
+
+TOG -> TOC: 1) request all available-assets
+TOC --> TOG: receive all available-assets
+note left
+Get coordinates of specific assetID
+end note
+
+TOG -> TOC: 2) request planning (from, nrOfTravelers, useAssets)
+note left
+from = coordinates of specific assetID
+nrOfTravelers = 1
+useAssets = assetID
+end note
+
+TOC --> TOG: receive planning
+
+TOG -> TOC: 3) request booking (id of previous planning)
+TOC --> TOG: receive booking in state pending
+
+
+TOG -> TOC: 4) request operator information
+TOC --> TOG: receive operator information
+
+TOG --> FLN: return vehicle contract data
+note right
+use bookingId, operator-conditions,
+pricing-information and
+booking-conditions in contract:
+
+IVehicleContractData:
+{
+  vehicleDID: <assetID>
+  consumerDID: <consumerDID>
+  pricePerMinute: <amount>
+  pricePerKm: <amount>
+  requiredUserClaims: <booking-conditions>
+  termsConditions: <operator-conditions>
+  bookingId: <bookingId>
+}
+end note
+
+FLN --> UMA: contractDID
+
+
+== Confirm Booking == 
+
+UMA -> FLN: complete rental start (contractDID, consumerConfirm VC)
+
+FLN -> TOG: confirm-booking(bookingID)
+
+TOG -> TOC: request booking state change (id, "COMMIT")
+TOC --> TOG: receive "CONFIRMED" booking
+TOG --> FLN: ok
+FLN --> UMA: ok
+
+@enduml

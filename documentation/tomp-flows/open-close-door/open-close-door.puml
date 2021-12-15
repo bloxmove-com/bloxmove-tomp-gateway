@@ -1,0 +1,23 @@
+@startuml Open/Close Door Flow
+ 
+participant "User Mobility App" as UMA 
+participant "Fleet Node" as FLN
+participant "TOMP-Gateway" as TOG
+participant "TO Car Service" as TOC
+
+
+
+== Open/Close Door == 
+
+UMA -> FLN: request access token
+FLN --> UMA: access token
+UMA -> FLN: request door open or close with access token
+
+FLN -> TOG: change-door-status(bookingID, status)
+
+TOG -> TOC: request booking leg state change (id, time, event: SET_IN_USE or PAUSE)
+TOC --> TOG: receive updated booking leg
+TOG --> FLN: ok
+FLN --> UMA: ok
+
+@enduml

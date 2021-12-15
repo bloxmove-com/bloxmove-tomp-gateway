@@ -1,0 +1,57 @@
+@startuml Get Service Catalog Flow
+ 
+participant "Service Catalog Aggregator" as SCA 
+participant "Fleet Node" as FLN
+participant "TOMP-Gateway" as TOG
+participant "TO Car Service" as TOC
+
+
+
+== Get Service Catalog of TO  == 
+
+
+SCA -> FLN: get service catalog
+
+FLN -> TOG: get service catalog
+note right
+Get necessary information 
+of transport operator:
+end note
+
+TOG -> TOC: 1) get operator available assets
+TOC --> TOG: available assets
+
+TOG -> TOC: 2) get operator pricing plans
+TOC --> TOG: pricing plans
+
+TOG -> TOC: 3) get operator information
+TOC --> TOG: operator information
+
+TOG -> FLN: service catalog
+note right
+map operator data 
+(available assets, pricing plans 
+and operator information)
+
+to a list of:
+
+IServiceCatalogEntry:
+{
+    status: IVehicleStatus;
+    servicePackages: IServicePackage[];
+    vehicleDID: <assetID>,
+    vin: <assetID>,
+    brand: <brand>,
+    model: <model>,
+    fuelType: <fuelType>,
+    numberOfDoors: <numberOfDoors>,
+    numberOfSeats: <numberOfSeats>,
+    transmission: <transmission>,
+    licensePlate: <licensePlate>,
+    imageUrl: <imageUrl>,
+}
+end note
+
+FLN -> SCA: service catalog
+
+@enduml
