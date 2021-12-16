@@ -69,6 +69,8 @@ The flow for calling this endpoint is documented in more detail in a sequence di
 
 # Getting started
 
+Before running the app you need to copy the `.env.example`-file, paste it to the root folder and rename it to `.env`. You can modify the files content to your needs.
+
 ## Run
 
 ```
@@ -106,4 +108,5 @@ docker-compose up --build
 
 ## Access local swagger UI
 
-http://localhost:2900/api/
+https://dev.mobilityblockchainplatform.io/bloxmove-tomp-gateway/api/
+
