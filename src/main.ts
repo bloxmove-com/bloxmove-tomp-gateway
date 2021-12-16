@@ -8,15 +8,15 @@ const appVersion = require('../package.json').version;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const options = new DocumentBuilder()
-    .setTitle(`TOMP Gateway v${appVersion}`)
-    .setDescription('The TOMP-Gateway API description.')
+    .setTitle(`bloXmove-TOMP Gateway v${appVersion}`)
+    .setDescription('The bloXmove-TOMP Gateway API description.')
     .setVersion('0.1')
     .addServer(process.env.SWAGGER_BASE_PATH || '/')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
   const portKey = 'PORT';
-  const endpoint = process.env[portKey] || 3007;
+  const endpoint = process.env[portKey] || 2900;
   await app.listen(endpoint);
 }
 bootstrap();
