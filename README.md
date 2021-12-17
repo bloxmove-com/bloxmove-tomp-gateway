@@ -106,7 +106,11 @@ Regarding reference issues in the yaml file, you have to add "//@ts-nocheck" on 
 docker-compose up --build
 ```
 
-## Access local swagger UI
+## View the bloXmove TOMP gateway on swagger UI:
 
-https://dev.mobilityblockchainplatform.io/bloxmove-tomp-gateway/api/
+upon correct local deployment at:
+ http://localhost:2900/api/
+
+our reference Swagger:
+ https://dev.mobilityblockchainplatform.io/bloxmove-tomp-gateway/api/
 
