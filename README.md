@@ -66,6 +66,10 @@ The flow for calling this endpoint is documented in more detail in a sequence di
 
 ![](documentation/tomp-flows/service-catalog/Get%20Service%20Catalog%20Flow.png)
 
+# Easy installation
+1. Preparing your TOMP transport-operator url, MaaS-ID and accept language, there is an example operator for testing purposes, See .env.example file
+2. run ./init.sh
+3. open http://localhost:2900/api to visit api document
 
 # Getting started
 
