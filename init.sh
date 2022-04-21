@@ -11,7 +11,7 @@ TOMP_MAAS_ID="d52bfad0-ee4b-4f72-9f38-efce115ffb49"
 TOMP_TRANSPORT_OPERATOR_BASE_URL="http://3.123.228.24:8083"
 
 # install dependency
-docker run --rm --volume $PWD:/build node:16 sh -c "cd /build/ && npm install"
+docker run --rm --volume $PWD:/build -u node node:16 sh -c "cd /build/ && npm install"
 
 # write following content to docker-compose.yml
 FILE="./docker-compose.yml"
