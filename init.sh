@@ -13,6 +13,17 @@ TOMP_TRANSPORT_OPERATOR_BASE_URL="http://3.123.228.24:8083"
 # install dependency
 docker run --rm --volume $PWD:/build -u node node:16 sh -c "cd /build/ && npm install"
 
+FILE="./Dockerfile-stable"
+cat > ${FILE} <<- EOF
+FROM node:16-alpine
+
+WORKDIR /app
+
+EXPOSE 2900
+
+CMD npm start
+EOF
+
 # write following content to docker-compose.yml
 FILE="./docker-compose.yml"
 cat > ${FILE} <<- EOF
