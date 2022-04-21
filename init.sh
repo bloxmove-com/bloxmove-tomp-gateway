@@ -13,29 +13,17 @@ TOMP_TRANSPORT_OPERATOR_BASE_URL="http://3.123.228.24:8083"
 # install dependency
 docker run --rm --volume $PWD:/build -u node node:16 sh -c "cd /build/ && npm install"
 
-FILE="./Dockerfile-stable"
-cat > ${FILE} <<- EOF
-FROM node:16-alpine
-
-WORKDIR /app
-
-EXPOSE 2900
-
-CMD npm start
-EOF
-
 # write following content to docker-compose.yml
 FILE="./docker-compose.yml"
 cat > ${FILE} <<- EOF
 version: '3.9'
 services:
   tomp-gateway:
-    build:
-      context: .
-      dockerfile: Dockerfile-stable
+    image: node:16
     volumes:
       # Mount source-code for development
       - ./:/app
+    working_dir: /app
     environment:
       - NODE_ENV=local
       - TOMP_API_VERSION=1.0.0
@@ -45,6 +33,14 @@ services:
       - API=TOMP
     ports:
       - '2900:2900'
+    command: npm start
 EOF
 
 docker-compose up -d
+
+# Prompts the user the service has been started
+echo ""
+echo "---------------------------------------------------------------------------"
+echo "TOMP-Gateway started, open http://localhost:2900/api/"
+echo "---------------------------------------------------------------------------"
+
