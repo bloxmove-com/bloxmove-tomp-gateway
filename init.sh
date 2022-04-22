@@ -6,12 +6,25 @@
 #cd bloxmove-tomp-gateway
 
 # TODO:ask user for TOMP_ACCEPT_LANGUAGE, TOMP_MAAS_ID and TOMP_TRANSPORT_OPERATOR_BASE_URL
-TOMP_ACCEPT_LANGUAGE="nl"
-TOMP_MAAS_ID="d52bfad0-ee4b-4f72-9f38-efce115ffb49"
-TOMP_TRANSPORT_OPERATOR_BASE_URL="http://3.123.228.24:8083"
+read -p "Enter TOMP transport operator base url: " TOMP_TRANSPORT_OPERATOR_BASE_URL
+read -p "Enter TOMP MaaS ID: " TOMP_MAAS_ID
+read -p "Enter TOMP accept language: " TOMP_ACCEPT_LANGUAGE
+#TOMP_ACCEPT_LANGUAGE="nl"
+#TOMP_MAAS_ID="d52bfad0-ee4b-4f72-9f38-efce115ffb49"
+#TOMP_TRANSPORT_OPERATOR_BASE_URL="http://3.123.228.24:8083"
+
+echo
+echo
+echo "TOMP transport operator base url: ${TOMP_TRANSPORT_OPERATOR_BASE_URL}"
+echo "TOMP MaaS ID: ${TOMP_MAAS_ID}"
+echo "TOMP accept language: ${TOMP_ACCEPT_LANGUAGE}"
+echo
+read -n 1 -p "Confirm the above inputs or CTRL + C to escape..." INP
 
 # install dependency
+echo "Installing dependencies..."
 docker run --rm --volume $PWD:/build -u node node:16 sh -c "cd /build/ && npm install"
+echo "done"
 
 # write following content to docker-compose.yml
 FILE="./docker-compose.yml"
@@ -41,6 +54,6 @@ docker-compose up -d
 # Prompts the user the service has been started
 echo ""
 echo "---------------------------------------------------------------------------"
-echo "TOMP-Gateway started, open http://localhost:2900/api/"
+echo "TOMP-Gateway service started, open http://localhost:2900/api/ to visit"
 echo "---------------------------------------------------------------------------"
 
